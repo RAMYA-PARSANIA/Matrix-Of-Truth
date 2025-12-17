@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Matrix-Of-Truth",
+  "version": "1.0",
+  "description": "Fact check web pages using Matrix-Of-Truth Fact Checker",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "host_permissions": [
+    "http://127.0.0.1:8000/*",
+    "https://matrix-extension-backend-221199009475.asia-south1.run.app/*"
+  ]
+}

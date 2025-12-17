@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "http://3.110.221.211/api/$1"
+    },
+    {
+      "source": "/ws/(.*)",
+      "destination": "http://3.110.221.211/ws/$1"
+    },
+    {
+      "source": "/backend/(.*)",
+      "destination": "http://3.110.221.211/$1"
+    }
+  ]
+}

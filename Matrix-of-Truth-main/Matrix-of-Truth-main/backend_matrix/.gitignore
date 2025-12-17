@@ -1,0 +1,14 @@
+.venv
+__pycache__
+log/
+.env
+nexus-truthtell.json
+.vscode/
+1.26.0
+venv
+deployment_logs/*
+nlp_model/knowledge_graph_final.pkl
+nlp_model/checkpoint-753/*
+deepfake_detection/deepfake_detector.h5
+service_acc/*
+service_acc_key/*

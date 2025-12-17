@@ -1,0 +1,16 @@
+.env
+.venv/
+*.xml
+*.iml
+.idea/
+.vscode/
+log/
+*node_modules/
+__pycache__/
+myenv/
+config.js
+deployment_logs/*
+knowledge_graph_final.pkl
+checkpoint-753/
+deepfake_detection/deepfake_detector.h5
+1.26.0

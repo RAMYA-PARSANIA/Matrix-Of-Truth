@@ -1,0 +1,73 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+ENV/
+
+# Tests and docs (not needed in production)
+test_*.py
+*_test.py
+tests/
+*.md
+!README.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+log/
+logs/
+*.log
+
+# Temporary files
+temp_frame_*
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.wav
+*.mp3
+fetched_pages.json
+
+# Results and cache
+craap_results/
+craap_results_v2/
+deployment_logs/
+
+# Git
+.git/
+.gitignore
+
+# Environment (use Secret Manager instead)
+.env
+.env.*
+
+# LARGE MODEL FILES - Download from Cloud Storage instead
+deepfake_detection/deepfake_detector.h5
+nlp_model/checkpoint-753/
+nlp_model/knowledge_graph_final.pkl
+
+# Unused files (saves build time and image size)
+install_*.py
+install_*.ps1
+craap_evaluator.py
+craap_use.py
+sources.py
+nlp_model/api.py
+nlp_model/save_model.py
+INTEGRATION_FIX_README.md
+NLP_FIX_GUIDE.md
+nltk_data/
+
+service_acc/
+
+# Note: Dockerfile and .dockerignore are NEEDED for Cloud Run builds
+# Don't exclude these!

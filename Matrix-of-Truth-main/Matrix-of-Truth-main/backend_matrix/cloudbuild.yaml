@@ -1,0 +1,55 @@
+steps:
+  # Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'asia-south1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/matrix-backend:$COMMIT_SHA'
+      - '-t'
+      - 'asia-south1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/matrix-backend:latest'
+      - '.'
+    dir: 'backend_matrix'
+
+  # Push Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '--all-tags'
+      - 'asia-south1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/matrix-backend'
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'matrix-backend'
+      - '--image=asia-south1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/matrix-backend:latest'
+      - '--region=asia-south1'
+      - '--platform=managed'
+      - '--memory=2Gi'
+      - '--cpu=2'
+      - '--min-instances=1'
+      - '--max-instances=5'
+      - '--allow-unauthenticated'
+      - '--update-secrets=GOOGLE_API_KEY=GOOGLE_API_KEY:latest,GEMINI_API_KEY=GEMINI_API_KEY:latest,SERPER_API_KEY=SERPER_API_KEY:latest,NEWS_API_KEY=NEWS_API_KEY:latest,GROQ_API_KEY=GROQ_API_KEY:latest,PUSHER_APP_ID=PUSHER_APP_ID:latest,PUSHER_KEY=PUSHER_KEY:latest,PUSHER_SECRET=PUSHER_SECRET:latest,PUSHER_CLUSTER=PUSHER_CLUSTER:latest,FIREBASE_PROJECT_ID=FIREBASE_PROJECT_ID:latest,FIREBASE_PRIVATE_KEY_ID=FIREBASE_PRIVATE_KEY_ID:latest,FIREBASE_PRIVATE_KEY=FIREBASE_PRIVATE_KEY:latest,FIREBASE_CLIENT_EMAIL=FIREBASE_CLIENT_EMAIL:latest,FIREBASE_CLIENT_ID=FIREBASE_CLIENT_ID:latest,FIREBASE_AUTH_URI=FIREBASE_AUTH_URI:latest,FIREBASE_TOKEN_URI=FIREBASE_TOKEN_URI:latest,FIREBASE_AUTH_PROVIDER_X509_CERT_URL=FIREBASE_AUTH_PROVIDER_X509_CERT_URL:latest,FIREBASE_CLIENT_X509_CERT_URL=FIREBASE_CLIENT_X509_CERT_URL:latest,FIREBASE_UNIVERSE_DOMAIN=FIREBASE_UNIVERSE_DOMAIN:latest,FACT_CHECK_URL=FACT_CHECK_URL:latest,SECRET_KEY=SECRET_KEY:latest,GOOGLE_APPLICATION_CREDENTIALS=GOOGLE_APPLICATION_CREDENTIALS:latest'
+
+# Images to push to Artifact Registry
+images:
+  - 'asia-south1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/matrix-backend:$COMMIT_SHA'
+  - 'asia-south1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/matrix-backend:latest'
+
+# Timeout for the entire build (30 minutes)
+timeout: 3600s
+
+# Build configuration options
+options:
+  # Use higher CPU machine for faster builds
+  machineType: 'E2_HIGHCPU_8'
+  # Enable Docker layer caching for faster rebuilds
+  logging: CLOUD_LOGGING_ONLY
+
+# Substitution variables (can be overridden in trigger)
+substitutions:
+  _REGION: 'asia-south1'
+  _SERVICE_NAME: 'matrix-backend'
